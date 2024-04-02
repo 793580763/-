@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--  The brains of the document                        -->
+<!--  Don't worry about most of it                      -->
+<!--  We'll usually just change the title and link tags -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>泽鹏专用成本计算器</title>
+	<!-- Import CSS -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<!-- The page content goes here!-->
+    <div class="标题">泽鹏五金专用成本计算器</div>
+
+
+
+    <div class="小标题">原材料信息</div>
+    <div class="材料数据面板" id="materialInfo"></div>
+
+    <form id="updateForm" class="填表区域">
+        <label for="materialName">选择材料：</label>
+        <select class="下拉选项" id="materialName">
+            <option value="铝">铝</option>
+            <option value="磷铜">磷铜</option>
+            <option value="黄铜">黄铜</option>
+            <option value="铁">铁</option>
+            <option value="锰">锰</option>
+            <option value="不锈钢2_304">不锈钢2.0 304</option>
+            <option value="不锈钢02软料">不锈钢0.2 软料</option>
+            <option value="不锈钢316L">不锈钢316L</option>
+            <option value="不锈钢拉伸DKU">不锈钢316L</option>
+            <option value="马口铁">马口铁</option>
+        </select>
+        <br>
+        <label for="newMaterialPrice">新单价：</label>
+        <input type="number" id="newMaterialPrice" class="数据填写框" step="0.01">
+        <br>
+        <label for="newScrapPrice">新废料单价：</label>
+        <input type="number" id="newScrapPrice" class="数据填写框" step="0.01">
+        <br>
+        <div class="提示信息">修改材料单价，无需更改则不填写</div>
+        <button type="submit" class="按钮">更新</button>
+    </form>
+
+
+
+
+    <div class="填表区域" id="options">
+        <button class="按钮" onclick="toggleOptions()">修改工序成本单价</button>
+        <div id="optionsPanel" style="display: none;">
+            <label for="selectData">工序名称：</label>
+            <select class="下拉选项" id="selectData">
+            <!-- 这里使用 JavaScript 动态生成下拉菜单选项 -->
+            </select>
+            <div class="信息栏模块">
+                <label for="newValue">新单价（元）：</label>
+                <input class="数据填写框" type="number" id="newValue">
+                <button class="按钮" onclick="updateValue()">修改</button>
+            </div>
+            <div id="infoPanel">
+            <!-- 这里将显示数据的信息，例如："镀镍单价：5元" -->
+        </div>
+    </div>
+
+
+
+
+    <form class="填表区域" id="inputForm">
+        <div class="小标题">产品材料成本计算</div>
+        <label for="料宽">料宽（mm）:</label>
+        <input class="数据填写框" type="number" id="料宽" name="料宽" required><br>
+        <label for="步距">步距（mm）:</label>
+        <input class="数据填写框" type="number" id="步距" name="步距" required><br>
+        <label for="厚度">厚度（mm）:</label>
+        <input class="数据填写框" type="number" id="厚度" name="厚度" required><br>
+        <label for="使用原料">选择原材料：</label>
+        <select class="下拉选项" id="使用原料">
+            <option value="铝">铝</option>
+            <option value="磷铜">磷铜</option>
+            <option value="黄铜">黄铜</option>
+            <option value="铁">铁</option>
+            <option value="锰">锰</option>
+            <option value="不锈钢2_304">不锈钢2.0 304</option>
+            <option value="不锈钢02软料">不锈钢0.2 软料</option>
+            <option value="不锈钢316L">不锈钢316L</option>
+            <option value="不锈钢拉伸DKU">不锈钢316L</option>
+            <option value="马口铁">马口铁</option>
+        </select>
+    </form>
+
+    <form class="填表区域" id="inputForm">
+        <label class="勾选卡" for="includeCalculation">在材料成本中，减去废料收入：</label>
+        <input type="checkbox" id="includeCalculation" name="includeCalculation">
+    </form>
+
+    <div id="expandInfo" class="填表区域" style="display: none;">
+        <form>
+            <input type="radio" id="radio产品净重" name="计算方式" value="产品净重">
+            <label class="文字高度对齐填写框" for="产品净重">产品净重（g）:</label>
+            <input class="数据填写框" type="number" id="产品净重" name="产品净重"><br>
+            
+            <div class="横排对齐">
+                <input type="radio" id="radio展开长和宽" name="计算方式" value="展开长和宽">
+                <div class="展开长宽信息栏模块">
+                    <div class="信息栏模块">
+                        <label class="文字高度对齐填写框" for="展开长">展开长（mm）:</label>
+                        <input class="数据填写框" type="number" id="展开长" name="展开长"><br>
+                    </div>
+                    <div class="信息栏模块">
+                        <label class="文字高度对齐填写框" for="展开宽">展开宽（mm）:</label>
+                        <input class="数据填写框" type="number" id="展开宽" name="展开宽"><br>
+                    </div>
+                    <div class="展开长宽信息提示" id="展开长宽信息提示">此项误差较大</div>
+                </div>
+            </div>
+
+            <input type="radio" id="radio展开面积" name="计算方式" value="展开面积">
+            <label class="文字高度对齐填写框" for="展开面积">展开面积（mm²）:</label>
+            <input class="数据填写框" type="number" id="展开面积" name="展开面积"><br>
+                    
+            <div class="提示信息">产品净重 / 展开长宽 / 展开面积 根据所持，信息填写一种即可</div>
+        </form>
+    </div>
+
+    <button class="按钮" type="button" onclick="计算材料成本(); 显示材料成本();">计算材料成本</button>
+    <div class="计算结果 显示结果" id="材料成本"></div>
+
+
+
+
+
+    <form class="填表区域" id="inputForm">
+        <div class="小标题">产品工序成本计算：</div>
+        <div class="信息栏模块">
+            <label for="表面处理方式">表面处理方式：</label>
+            <select class="下拉选项" id="表面处理方式">
+                <option value="镀锡20">镀锡20</option>
+                <option value="镀锡25">镀锡25</option>
+                <option value="镀镍">镀镍</option>
+                <option value="镀锌">镀锌</option>
+                <option value="本色">本色</option>
+            </select>
+        </div>
+        <label for="冲压费">冲压费:</label>
+        <input class="数据填写框" type="number" id="冲压费" name="冲压费" required><br>
+        <label for="攻牙个数">攻牙个数:</label>
+        <input class="数据填写框" type="number" id="攻牙个数" name="攻牙个数" required><br>
+        <label for="PIN脚个数">PIN脚个数:</label>
+        <input class="数据填写框" type="number" id="PIN脚个数" name="PIN脚个数" required><br>
+        <div class="信息栏模块">
+            <label for="纸箱型号">选择纸箱型号：</label>
+            <select class="下拉选项" id="纸箱型号">
+                <option value="K636K大">普通 K636K大</option>
+                <option value="K636K中">普通 K636K中</option>
+                <option value="K636K小">普通 K636K小</option>
+                <option value="Y737Y大">越南 Y737Y大</option>
+                <option value="Y737Y中">越南 Y737Y中</option>
+                <option value="Y737Y小">越南 Y737Y小</option>
+            </select>
+        </div>
+        <div class="信息栏模块">
+            <label for="装箱个数">装箱个数:</label>
+            <input class="数据填写框" type="number" id="装箱个数" name="装箱个数" required><br>
+            <label for="运输费">运输费:</label>
+            <input class="数据填写框" type="number" id="运输费" name="运输费" required><br>
+        </div>    
+    </form>
+    <button class="按钮" type="button" onclick="计算材料成本(); 计算工序成本(); 显示工序成本()">计算工序成本</button>
+    <div class="计算工序成本结果 显示结果" id="工序成本"></div>
+
+
+
+
+    <form class="填表区域" id="inputForm">
+        <div class="小标题">产品其他成本计算：</div>
+        <label class="勾选卡" for="计算利润">在成本中纳入利润：</label>
+        <input type="checkbox" id="计算利润" name="计算利润">
+        <div class="横排对齐">
+            <label class="文字高度对齐填写框" for="利润率">计算利润，默认为15%，填写可修改(%)：</label>
+            <input class="数据填写框" type="number" id="利润率" name="利润率" required style="display: none;"><br>
+        </div>
+        <label class="勾选卡" for="计算税额">在成本中纳入税额：</label>
+        <input type="checkbox" id="计算税额" name="计算税额">
+        <div class="横排对齐">
+            <label class="文字高度对齐填写框" for="税率">计算税额，默认为13%，填写可修改(%)：</label>
+            <input class="数据填写框" type="number" id="税率" name="税率" required style="display: none;"><br>
+        </div>
+        <div class="提示信息">修改利润率信息，无需更改则不填写</div>
+    </form>
+    <button class="按钮" type="button" onclick="计算材料成本(); 计算工序成本(); 计算产品利润及税额(); 显示产品利润及税额()">计算产品利润及税额</button>
+    <div class="计算产品利润及税额结果 显示结果" id="利润额及税额"></div>
+
+
+
+
+    <button class="按钮" type="button" onclick="计算材料成本(); 计算工序成本(); 计算产品利润及税额(); 计算总成本(); 显示总成本()">总成本</button>
+    <div class="计算总成本结果 显示结果" id="总成本"></div>
+
+    <button class="按钮" onclick="导出Excel文件()">导出Excel文件</button>
+
+    <script src="main.js"></script>
+    
+</body>
+
+</html>

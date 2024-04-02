@@ -1,0 +1,102 @@
+body{
+  padding: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: left;
+  align-items: left;
+  flex-wrap: wrap;
+  margin-bottom: 100px;
+}
+
+.标题{
+	font-size: 20px;
+	display: block;
+	flex-wrap: wrap;
+	color: #000000;
+  font-weight: bold;
+}
+
+.小标题{
+  margin-top: 30px;
+  font-size: 15px;
+  display: block;
+  flex-wrap: wrap;
+  font-weight: bold;
+}
+
+.材料数据面板{
+  font-size: 12px;
+  color: #000000;
+  margin: 2px;
+  display: block;
+}
+
+.填表区域{
+  margin-top: 10px;
+  font-size: 12px;
+  flex-wrap: wrap;
+  display: block;
+  text-align: left;
+  color: #000000;
+}
+
+.数据填写框{
+  margin: 3px;
+  height: 15px;
+  width: 120px;
+}
+
+.信息栏模块{
+  display:block;
+}
+
+.展开长宽信息提示{
+  color: #ff0000;
+  margin-top: 5px;
+  font-size: 11px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.横排对齐{
+  display: flex;
+  align-items: flex-start;
+}
+
+.文字高度对齐填写框{
+  height: 27px;
+  text-align: center;
+}
+
+.下拉选项{
+  margin: 3px;
+  height: 23px;
+  margin-right: 30px;
+}
+
+.按钮{
+  align-items: bottom;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.提示信息{
+  margin-top: 5px;
+  font-size: 11px;
+  display: flex;
+  flex-wrap: wrap;
+  color: #666666;
+}
+
+.勾选卡{
+  font-size: 12px;
+  font-weight: bold;
+  flex-wrap: wrap;
+  text-align: left;
+  color: #525252;
+}
+
+ .显示结果{
+  font-weight: bold;
+}
